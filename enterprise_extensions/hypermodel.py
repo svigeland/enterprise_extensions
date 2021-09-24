@@ -72,6 +72,14 @@ class HyperModel(object):
 
             self.snames[key] = np.array(self.snames[key])[[all_params.index(q)
                                                            for q in uniq_params]].tolist()
+                                                        
+        # get a list of the pulsars
+        pulsarlist = []
+        for mm in self.models:
+            for sc in self.models[mm]._signalcollections:
+                pulsarlist.append(sc.psrname)
+        self.pulsars = np.unique(pulsarlist)
+
         #########
 
     def get_lnlikelihood(self, x):
