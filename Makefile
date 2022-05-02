@@ -31,15 +31,11 @@ init:
 	@./.enterprise_extensions/bin/python3 -m pip install -U pip setuptools wheel
 	@./.enterprise_extensions/bin/python3 -m pip install -r requirements.txt -U
 	@./.enterprise_extensions/bin/python3 -m pip install -r requirements_dev.txt -U
+	@./.enterprise_extensions/bin/python3 -m pre_commit install --install-hooks --overwrite
 	@./.enterprise_extensions/bin/python3 -m pip install -e .
 	@echo "run source .enterprise_extensions/bin/activate to activate environment"
 
-
-format:
-	black .
-
 lint:
-	black --check .
 	flake8 .
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
@@ -63,7 +59,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -rf coverage.xml
 
-COV_COVERAGE_PERCENT ?= 5
+COV_COVERAGE_PERCENT ?= 30
 test: #lint ## run tests quickly with the default Python
 	pytest -v --durations=10 --full-trace --cov-report html --cov-report xml \
 		--cov-config .coveragerc --cov-fail-under=$(COV_COVERAGE_PERCENT) \
