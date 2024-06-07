@@ -62,7 +62,7 @@ def fdm_block(Tmin, Tmax, amp_prior='log-uniform', name='fdm',
 
 def cw_block_circ(amp_prior='log-uniform', dist_prior=None,
                   skyloc=None, log10_fgw=None,
-                  psrTerm=False, tref=0, name='cw'):
+                  psrTerm=False, phase_approx=True, tref=0, name='cw'):
     """
     Returns deterministic, cirular orbit continuous GW model:
 
@@ -85,6 +85,9 @@ def cw_block_circ(amp_prior='log-uniform', dist_prior=None,
         Search over distance or strain if ``None`` given.
     :param psrTerm:
         Boolean for whether to include the pulsar term. Default is False.
+    :param phase_approx:
+        Boolean for whether to use the phase approximation to calculate the 
+        binary frequency evolution. Default is True.
     :param name:
         Name of CW signal.
 
@@ -142,13 +145,13 @@ def cw_block_circ(amp_prior='log-uniform', dist_prior=None,
                   log10_mc=log10_Mc, log10_fgw=log10_fgw,
                   log10_h=log10_h, log10_dist=log10_dist,
                   phase0=phase0, psi=psi,
-                  psrTerm=True, p_dist=p_dist, p_phase=p_phase,
-                  phase_approx=True, check=False,
+                  psrTerm=psrTerm, p_dist=p_dist, p_phase=p_phase,
+                  phase_approx=phase_approx, check=False,
                   tref=tref)
     cw = CWSignal(wf, ecc=False, psrTerm=psrTerm)
 
     return cw
-
+    
 
 def cw_block_ecc(amp_prior='log-uniform', skyloc=None, log10_F=None,
                  ecc=None, psrTerm=False, tref=0, name='cw'):
